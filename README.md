@@ -5,22 +5,35 @@
 ### ***Project Summary*** 
 In this project, our task is to identify major customer segments on a transnational data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail.The company mainly sells unique all-occasion gifts. Many customers of the company are wholesalers.
 
-In this project, our task is to identify major customer segments on a transnational data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail.The company mainly sells unique all-occasion gifts. Many customers of the company are wholesalers.
-Problem Statement
+### ***Problem Statement***
 A primary goal for any company and business is to understand their targeted customers. How their consumers operate and use their services. Every consumer may use a companies services differently. The problem we’re trying to solve is to define this delivery company’s consumers. To define certain behaviors and methods these consumers use the companies services for.
-The optimal number of clusters for most of the models and data combinations is 2. The evaluation metrics considered in our project are silhouette score and the elbow method for K-means clustering.
 
+### ***Approaches***
+we will break this endeavor into different parts-:
+### ***EDA***
+- In this i have created different charts like Bar, Kde, Histogram, Box, Heatmap and Pair Plot for getting insights from the data and based on that we can do some feature Engineering.
+- I also performed Hypothesis Testing based on our findings.
+
+### ***Creating RFM Model***
+Before applying any clustering algorithms it is always necessary to determine various quantitative factors on which the algorithm will perform segmentation. Examples of these would be features such as amount spend, activeness of the customer, their last visit, etc.
+
+RFM model which stands for Recency, Frequency, and Monetary is one of such steps in which we determine the recency - days to last visit, frequency - how actively the customer repurchases and monetary - total expenditure of the customer, for each customer. There are other steps too in which we divide each of these features accordingly and calculate a score for each customer. However, this approach doesnot require machine learning algorithms as segmentation can be done manually. Therefore we will skip the second step and directly use the rfm features and feed it to clustering algorithms.
 To evaluate the positive business impact of the customer segmentation,the following evaluation metrics were considered:
+          - Recency = Latest Date - Last Inovice Data,
+          - Frequency = count of invoice no. of transaction(s)
+          - Monetary = Sum of Total Amount for each customer
 
-Silhouette Score: The silhouette score measures the quality and compactness of the clusters. A higher silhouette score indicates well-separated clusters with minimal overlap. It provides a measure of how similar an object is to its own cluster compared to other clusters. Considering the silhouette score helps ensure that the identified clusters are distinct and meaningful, which can be beneficial for targeting specific customer segments with tailored marketing strategies.
+### ***Segmentation with K-means clustering:***
+   ***Applied Silhouette Score Method on Recency and Monetary*** and ***Applied Elbow Method on Recency and Monetary*** we see that ,Customers are well separate when we cluster them by Recency and Monetary.
+   ***Applied DBSCAN Algorithm on Recency and Monetary*** we see that ,Customers are well separate when we cluster them by Frequency and Monetary.
+   ***Applied Hierarchical Clustering*** i get No. of Cluster = 2.
+   
+- Here i used K-means clustering.
+- K-means clustering is a popular and widely used algorithm for customer segmentation due to its simplicity, interpretability, and scalability.
 
-Elbow Method: The elbow method is used to determine the optimal number of clusters based on the within-cluster sum of squares (WCSS) or the distortion. It involves plotting the WCSS as a function of the number of clusters and identifying the "elbow" point where the improvement in WCSS diminishes. The chosen number of clusters at the elbow point represents a trade-off between maximizing the separation of clusters and minimizing the complexity of the segmentation. This helps in finding a balance between granularity and practicality for business implementation.
+### ***Conclusion***
+The analysis we went through various steps to perform customer segmentation. We started with data wrangling in which we tried to handle null values, duplicates and performed feature modifications. Next, we did some exploratory data analysis and tried to draw observations from the features we had in the dataset.
 
-The selection of these evaluation metrics indicates a focus on the quality of the clusters, their distinctiveness, and the ability to interpret and act upon the segmentation results. By considering these metrics, you aim to create customer segments that have clear boundaries and exhibit different behaviors or characteristics, which can lead to positive business impact through targeted marketing strategies, personalized customer experiences, and improved customer satisfaction.
-Here i used K-means clustering.
-K-means clustering is a popular and widely used algorithm for customer segmentation due to its simplicity, interpretability, and scalability.
-Why i used,because-:
+Next, we formulated some quantitative factors such as recency, frequency and monetary known as rfm model for each of the customers. We implemented KMeans clustering algorithm on these features. We also performed silhouette and elbow method analysis to determine the optimal no. of clusters which was 2. We saw customers having high recency and low frequency and monetary values were part of one cluster and customers having low recency and high frequency, monetary values were part of another cluster.
 
-Scalability: K-means clustering is computationally efficient and can handle large datasets with a large number of customers. This is particularly important for online businesses that often have a vast amount of customer data.
-Interpretability: K-means clustering produces easily interpretable results. The algorithm assigns each customer to a specific cluster based on their similarity in terms of feature values. The resulting clusters can be easily understood and analyzed to gain insights into customer behavior and characteristics.
-Applicability to Online Data: K-means clustering can handle various types of features, including demographic information, purchase behavior, browsing patterns, or any other relevant data collected from online platforms. It can capture different aspects of customer behavior and group customers into distinct segments based on their similarities.
+However, there can be more modifications on this analysis. One may choose to cluster into more no. depending on company objectives and preferences. The labelled feature after clustering can be fed into classification supervised machine learning algorithms that could predict the classes for new set of observations.
